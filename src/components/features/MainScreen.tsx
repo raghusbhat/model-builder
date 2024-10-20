@@ -1,10 +1,18 @@
 import React from "react";
+import { ReactFlow, Controls, Background } from "@xyflow/react";
+import useStore from "@/store/useStore";
+import "@xyflow/react/dist/style.css";
 
 const MainScreen: React.FC = () => {
+  const nodes = useStore((state) => state.nodes);
+  const edges = useStore((state) => state.edges);
+
   return (
-    <main className="flex-1 p-6 bg-surface-a0 text-primary-a50">
-      <h2 className="text-2xl font-bold mb-4">Welcome to the Main Screen</h2>
-      <p>This is where your main content will go.</p>
+    <main className="flex-1 bg-surface-a0 text-primary-a50">
+      <ReactFlow nodes={nodes} edges={edges} fitView>
+        <Background />
+        <Controls />
+      </ReactFlow>
     </main>
   );
 };

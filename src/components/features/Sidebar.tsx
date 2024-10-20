@@ -21,6 +21,7 @@ import {
   ContextMenuContent,
   ContextMenuItem,
 } from "@/components/ui/context-menu";
+import useStore from "@/store/useStore";
 
 // Define interfaces for layer items and sidebar sections
 interface LayerItem {
@@ -216,6 +217,7 @@ const sidebarSections: SidebarSection[] = [
 const Sidebar: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+  const addNode = useStore((state) => state.addNode);
 
   // Filter sections based on search query
   const filteredSections =
@@ -243,6 +245,12 @@ const Sidebar: React.FC = () => {
       return acc;
     }, {} as Record<string, boolean>);
     setOpenSections(allClosed);
+  };
+
+  // Function to handle adding a layer
+  const handleAddLayer = (layer: LayerItem) => {
+    addNode(layer);
+    console.log(`Adding layer: ${layer.name}`);
   };
 
   return (
@@ -338,12 +346,6 @@ const Sidebar: React.FC = () => {
       </ContextMenuContent>
     </ContextMenu>
   );
-};
-
-// Function to handle adding a layer (to be implemented)
-const handleAddLayer = (layer: LayerItem) => {
-  // TODO: Implement the logic to add the layer to the main screen
-  console.log(`Adding layer: ${layer.name}`);
 };
 
 export default Sidebar;
